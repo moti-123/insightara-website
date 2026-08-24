@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        Insightara — Data Analytics, Data Engineering & AI/ML
+        {% endblock %}
+    </title>
+
+    <meta name="description"
+        content="Insightara builds data and AI systems — data analytics, data engineering, machine learning, and AI engineering — turning raw data into decisions and products.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           THEME VARIABLES
+        ===================================================== */
+
+        :root {
+
+            /* Brand Colors */
+            --navy:  #163A63;
+            --navy-deep: #163A63;
+            --ivory: #F7F5EF;
+            --gold: #C9A227;
+            --gold-soft: #E4C766;
+            --slate: #33415C;
+
+            /* Light Theme */
+            --body-bg: #F7F5EF;
+            --body-text: #163A63;
+
+            --nav-bg: rgba(247, 245, 239, 0.95);
+
+            --card-bg: #FFFFFF;
+
+            --border-color: rgba(11, 31, 58, 0.10);
+
+            --muted-text: #33415C;
+
+        }
+
+
+        /* =====================================================
+           DARK THEME
+        ===================================================== */
+
+        body.dark-mode {
+
+            --navy: #F7F5EF;
+            --navy-deep: #163A63;
+            --ivory: #F7F5EF;
+
+            --slate: #CBD5E1;
+
+            /* Dark Theme */
+            --body-bg: #163A63;
+            --body-text: #F7F5EF;
+
+            --nav-bg: rgba(7, 20, 39, 0.95);
+
+            --card-bg: #163A63;
+
+            --border-color: rgba(255, 255, 255, 0.12);
+
+            --muted-text: #CBD5E1;
+
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            background-color: var(--body-bg);
+
+            color: var(--body-text);
+
+            transition:
+                background-color 0.35s ease,
+                color 0.35s ease;
+
+        }
+
+
+        /* =====================================================
+           FONT CLASSES
+        ===================================================== */
+
+        .font-display {
+
+            font-family: 'Fraunces', serif;
+
+        }
+
+
+        .font-mono {
+
+            font-family: 'JetBrains Mono', monospace;
+
+        }
+
+
+        /* =====================================================
+           CUSTOM COLORS
+        ===================================================== */
+
+        .bg-ivory {
+
+            background-color: var(--ivory);
+
+        }
+
+
+        .text-ivory {
+
+            color: var(--ivory);
+
+        }
+
+
+        .bg-navy {
+
+            background-color: var(--navy);
+
+        }
+
+
+        .bg-navy-deep {
+
+            background-color: var(--navy-deep);
+
+        }
+
+
+        .text-navy {
+
+            color: var(--navy);
+
+        }
+
+
+        .text-gold {
+
+            color: var(--gold);
+
+        }
+
+
+        .bg-gold {
+
+            background-color: var(--gold);
+
+        }
+
+
+        .border-gold {
+
+            border-color: var(--gold);
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        nav {
+
+            background-color: var(--nav-bg) !important;
+
+            border-color: var(--border-color) !important;
+
+            transition:
+                background-color 0.35s ease,
+                border-color 0.35s ease;
+
+        }
+
+
+        /* =====================================================
+           DARK MODE NAVBAR
+        ===================================================== */
+
+        body.dark-mode nav {
+
+            background-color: rgba(7, 20, 39, 0.95) !important;
+
+            border-color: rgba(255, 255, 255, 0.10) !important;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        main {
+
+            background-color: var(--body-bg);
+
+            color: var(--body-text);
+
+            transition:
+                background-color 0.35s ease,
+                color 0.35s ease;
+
+        }
+
+
+        /* =====================================================
+           CARDS
+        ===================================================== */
+
+        body.dark-mode .bg-white {
+
+            background-color: var(--card-bg) !important;
+
+            color: #F7F5EF !important;
+
+        }
+
+
+        /* =====================================================
+           SLATE TEXT
+        ===================================================== */
+
+        body.dark-mode .text-slate {
+
+            color: #CBD5E1 !important;
+
+        }
+
+
+        /* =====================================================
+           BORDER
+        ===================================================== */
+
+        body.dark-mode .border-navy\/10 {
+
+            border-color: rgba(255, 255, 255, 0.12) !important;
+
+        }
+
+
+        /* =====================================================
+           THEME TOGGLE
+        ===================================================== */
+
+        #theme-toggle {
+
+            width: 52px;
+
+            height: 32px;
+
+            border-radius: 999px;
+
+            background-color: var(--navy);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            border: none;
+
+            outline: none;
+
+            transition:
+                background-color 0.3s ease,
+                transform 0.3s ease;
+
+        }
+
+
+        #theme-toggle:hover {
+
+            background-color: var(--gold);
+
+        }
+
+
+        #theme-icon {
+
+            color: var(--ivory);
+
+            font-size: 17px;
+
+            line-height: 1;
+
+            transition:
+                transform 0.3s ease;
+
+        }
+
+
+        #theme-toggle:hover #theme-icon {
+
+            transform: rotate(20deg);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+/* =====================================================
+   FOOTER - FINAL COLOR FIX
+===================================================== */
+
+footer {
+    background-color:#163A63 !important;
+    color: #CBD5E1 !important;
+}
+
+
+/* Footer brand heading */
+footer h2 {
+    color: #F7F5EF !important;
+}
+
+
+/* Footer section headings */
+footer h3 {
+    color: #F7F5EF !important;
+}
+
+
+/* Footer description */
+footer p {
+    color: #CBD5E1 !important;
+}
+
+
+/* Footer list text */
+footer li {
+    color: #CBD5E1 !important;
+}
+
+
+/* Footer links */
+footer a {
+    color: #CBD5E1 !important;
+}
+
+
+/* Footer links hover */
+footer a:hover {
+    color: #C9A227 !important;
+}
+
+
+/* Gold dot */
+footer .text-gold {
+    color: #C9A227 !important;
+}
+
+
+/* Work with us button */
+footer a.bg-gold {
+    background-color: #C9A227 !important;
+    color: #163A63 !important;
+}
+
+
+/* Button hover */
+footer a.bg-gold:hover {
+    background-color: #F7F5EF !important;
+    color: #163A63 !important;
+}
+
+
+/* Footer bottom border */
+footer .border-t {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+
+/* Footer bottom text */
+footer .text-sm {
+    color: #94A3B8 !important;
+}
+
+
+/* Keep button text dark */
+footer a.bg-gold .text-gold,
+footer a.bg-gold span {
+    color: #163A63 !important;
+}
+        /* =====================================================
+           FOOTER LINKS
+        ===================================================== */
+
+        .footer-link {
+
+            transition: color 0.25s ease;
+
+        }
+
+
+        .footer-link:hover {
+
+            color: var(--gold);
+
+        }
+
+
+        /* =====================================================
+           REVEAL ANIMATION
+        ===================================================== */
+
+        .reveal {
+
+            opacity: 0;
+
+            transform: translateY(16px);
+
+            transition:
+                opacity 0.6s ease,
+                transform 0.6s ease;
+
+        }
+
+
+        .reveal.in {
+
+            opacity: 1;
+
+            transform: none;
+
+        }
+
+
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .reveal {
+
+                transition: none !important;
+
+                opacity: 1 !important;
+
+                transform: none !important;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="antialiased">
+
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav class="w-full backdrop-blur border-b">
+
+        <div
+            class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="{% url 'home' %}"
+                class="font-display text-2xl font-semibold tracking-tight">
+
+                Insightara<span class="text-gold">.</span>
+
+            </a>
+
+
+            <!-- NAVIGATION -->
+
+            <div
+                class="hidden md:flex gap-8 text-sm font-medium">
+
+                <a
+                    href="{% url 'home' %}#about"
+                    class="hover:text-gold transition">
+
+                    About
+
+                </a>
+
+
+                <a
+                    href="{% url 'home' %}#services"
+                    class="hover:text-gold transition">
+
+                    Services
+
+                </a>
+
+
+                <a
+                    href="{% url 'home' %}#team"
+                    class="hover:text-gold transition">
+
+                    Team
+
+                </a>
+
+
+                <a
+                    href="{% url 'projects' %}"
+                    class="hover:text-gold transition">
+
+                    Projects
+
+                </a>
+
+
+                <a
+                    href="{% url 'home' %}#contact"
+                    class="hover:text-gold transition">
+
+                    Contact
+
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 THEME TOGGLE
+            ================================================== -->
+
+            <button
+                id="theme-toggle"
+                type="button"
+                aria-label="Toggle dark mode"
+                title="Toggle dark mode">
+
+                <span id="theme-icon">☾</span>
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ===================================================== -->
+
+    <main>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer class="mt-24">
+
+
+        <!-- FOOTER MAIN -->
+
+        <div class="max-w-7xl mx-auto px-6 py-16">
+
+            <div
+                class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+
+
+                <!-- BRAND -->
+
+                <div class="lg:col-span-2">
+
+                    <h2
+                        class="font-display text-3xl font-semibold text-ivory mb-5">
+
+                        Insightara<span class="text-gold">.</span>
+
+                    </h2>
+
+
+                    <p
+                        class="max-w-md leading-relaxed text-ivory/60">
+
+                        Turning data into decisions through analytics,
+                        data engineering, machine learning, and AI engineering.
+
+                    </p>
+
+
+                    <a
+                        href="{% url 'home' %}#contact"
+                        class="inline-flex items-center gap-3
+                               bg-gold text-navy
+                               px-6 py-3
+                               rounded-full
+                               font-medium
+                               mt-7
+                               hover:bg-ivory
+                               transition">
+
+                        Work with us
+
+                        <span>↗</span>
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- EXPLORE -->
+
+                <div>
+
+                    <h3
+                        class="text-ivory font-semibold mb-5">
+
+                        Explore
+
+                    </h3>
+
+
+                    <ul class="space-y-3 text-sm">
+
+
+                        <li>
+
+                            <a
+                                href="{% url 'home' %}#about"
+                                class="footer-link">
+
+                                About
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a
+                                href="{% url 'home' %}#services"
+                                class="footer-link">
+
+                                Services
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a
+                                href="{% url 'home' %}#team"
+                                class="footer-link">
+
+                                Team
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a
+                                href="{% url 'projects' %}"
+                                class="footer-link">
+
+                                Projects
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a
+                                href="{% url 'home' %}#contact"
+                                class="footer-link">
+
+                                Contact
+
+                            </a>
+
+                        </li>
+
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- EXPERTISE -->
+
+                <div>
+
+                    <h3
+                        class="text-ivory font-semibold mb-5">
+
+                        Expertise
+
+                    </h3>
+
+
+                    <ul class="space-y-3 text-sm">
+
+                        <li>
+                            Data Analytics
+                        </li>
+
+                        <li>
+                            Data Engineering
+                        </li>
+
+                        <li>
+                            Machine Learning
+                        </li>
+
+                        <li>
+                            AI Engineering
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="border-t border-white/10">
+
+            <div
+                class="max-w-7xl mx-auto px-6 py-6
+                       flex flex-col md:flex-row
+                       justify-between
+                       items-center
+                       gap-4">
+
+
+                <p
+                    class="text-sm text-ivory/50">
+
+                    © {% now "Y" %} Insightara.
+                    All rights reserved.
+
+                </p>
+
+
+                <p
+                    class="text-sm text-ivory/50">
+
+                    Turning Data into Decisions.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           SCROLL REVEAL
+        ===================================================== */
+
+        const io = new IntersectionObserver(
+
+            (entries) => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add('in');
+
+                    }
+
+                });
+
+            },
+
+            {
+                threshold: 0.15
+            }
+
+        );
+
+
+        document
+            .querySelectorAll('.reveal')
+            .forEach(element => {
+
+                io.observe(element);
+
+            });
+
+
+
+        /* =====================================================
+           DARK / LIGHT MODE
+        ===================================================== */
+
+        const themeToggle =
+            document.getElementById('theme-toggle');
+
+        const themeIcon =
+            document.getElementById('theme-icon');
+
+
+
+        /* =====================================================
+           LOAD SAVED THEME
+        ===================================================== */
+
+        const savedTheme =
+            localStorage.getItem('insightara-theme');
+
+
+        if (savedTheme === 'dark') {
+
+            document.body.classList.add('dark-mode');
+
+            themeIcon.textContent = '☀';
+
+        }
+
+        else {
+
+            themeIcon.textContent = '☾';
+
+        }
+
+
+
+        /* =====================================================
+           TOGGLE THEME
+        ===================================================== */
+
+        themeToggle.addEventListener('click', () => {
+
+
+            /* Toggle dark-mode class */
+
+            const isDark =
+                document.body.classList.toggle('dark-mode');
+
+
+            /* Dark Mode */
+
+            if (isDark) {
+
+                localStorage.setItem(
+                    'insightara-theme',
+                    'dark'
+                );
+
+                themeIcon.textContent = '☀';
+
+            }
+
+
+            /* Light Mode */
+
+            else {
+
+                localStorage.setItem(
+                    'insightara-theme',
+                    'light'
+                );
+
+                themeIcon.textContent = '☾';
+
+            }
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>
