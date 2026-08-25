@@ -113,3 +113,7 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CONTACT_NOTIFY_EMAIL = os.environ.get("CONTACT_NOTIFY_EMAIL", EMAIL_HOST_USER)
+EMAIL_TIMEOUT = 10
+
+# --- Resend (HTTP-based email API — works even where SMTP ports are blocked) ---
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
